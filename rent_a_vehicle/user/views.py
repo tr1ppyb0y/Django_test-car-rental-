@@ -18,10 +18,9 @@ def sign_up(request):
 
 
 @csrf_exempt
-@api_view(['POST'])
+@api_view(['GET'])
 def login(request):
-    breakpoint()
-    serializer = user_serializer.LoginSerializer(data=request.data)
+    serializer = user_serializer.LoginSerializer(data=request.query_params)
     if serializer.is_valid(raise_exception=True):
         creds = serializer.validated_data
         creds_dict = dict(creds.items())
@@ -33,7 +32,6 @@ def login(request):
                 'message': str(err)
             }
             return JsonResponse(content, status=400)
-        breakpoint()
         if user.check_password(creds_dict['password']):
             # Implementation pending.
             # login(request, user)
