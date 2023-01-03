@@ -1,0 +1,21 @@
+This is not a working example, just prototype.
+
+Base Urls
+1. api/user/ -- Redirect all the urls with this prefix to User application.
+2. api/vehicle/ -- Redirect all the urls with this prefix to Vehicle application.
+
+
+User application URLs
+1. sign-up/ -- Takes email, username and password and sign up the user.
+2. login/ -- Takes username and password from the user and logs him/her in.*
+
+*login API implementation is still incomplete and comsumed most of my time.
+
+Vehicle application URLs
+1. list-add-vehicle/ -- To any authenticated use, this will list all the avaliable vehicles. 
+Also, allow users to add there vehicle.
+2. retrive-update-delete-vehicle/<int:id> -- Allow owners to update/retrive/delete the details of their vehicles.
+3. vehicle-logs/ -- If the user is owner it'll show logs for his/her vehicles. 
+If the user is renter it'll show logs for the vehicles he/she rented.
+
+** Accept/Reject is not implemented.
