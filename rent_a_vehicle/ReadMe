@@ -5,11 +5,10 @@ Base Urls
 2. api/vehicle/ -- Redirect all the urls with this prefix to Vehicle application.
 
 
-User application URLs
+User application URLs -- Uses Token Authentication
 1. sign-up/ -- Takes email, username and password and sign up the user.
-2. login/ -- Takes username and password from the user and logs him/her in.*
-
-*login API implementation is still incomplete and comsumed most of my time.
+2. login/ -- Takes username and password from the user and logs him/her in.
+3. logout/ -- checks for user is authenticated and takes token in headers, then logs-out the user.
 
 Vehicle application URLs
 1. list-add-vehicle/ -- To any authenticated use, this will list all the avaliable vehicles. 
