@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import Vehicles
+from user import serializers as user_serializers
 
 
 class ListCreateVehicleSerializer(serializers.ModelSerializer):

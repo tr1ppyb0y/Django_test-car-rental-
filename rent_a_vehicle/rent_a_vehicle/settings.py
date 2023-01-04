@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-v0&0-lppbooc--y&af&=&k!0(t55x@(f(@v(kcbnju_i%9j3g-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', '*']
 
 
 # Application definition
@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework', # Library
+    'rest_framework.authtoken',
     'user', # App
     'vehicle', # App
 ]
@@ -127,7 +128,14 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 #Authentication backends
-AUTHENTICATION_BACKENDS = (
-        'django.contrib.auth.backends.ModelBackend',
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication'
+    ],
+    'DEFAULT_PERMISSION_CLASSES':(
+                'rest_framework.permissions.IsAuthenticated',
     )
+}
 AUTH_USER_MODEL = 'user.User'

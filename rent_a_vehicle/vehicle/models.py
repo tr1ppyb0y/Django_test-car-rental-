@@ -24,7 +24,7 @@ class Vehicles(models.Model):
     created_at = models.DateTimeField()
 
     def save(self, *args, **kwargs):
-        self.rented_at = datetime.datetime.now(tz=timezone.utc)
+        self.created_at = datetime.datetime.now(tz=timezone.utc)
         return super().save(*args, **kwargs)
 
 class RentedLogs(models.Model):
