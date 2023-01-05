@@ -31,16 +31,18 @@ ALLOWED_HOSTS = ['127.0.0.1', '*']
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
+    'channels',
+    'rest_framework', # Library
+    'rest_framework.authtoken',
+    'user', # App
+    'vehicle', # App
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework', # Library
-    'rest_framework.authtoken',
-    'user', # App
-    'vehicle', # App
 ]
 
 MIDDLEWARE = [
@@ -53,6 +55,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# WSGI_APPLICATION = 'rent_a_vehicle.wsgi.application'
+ASGI_APPLICATION = 'rent_a_vehicle.asgi.application'
 ROOT_URLCONF = 'rent_a_vehicle.urls'
 
 TEMPLATES = [
@@ -71,7 +75,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'rent_a_vehicle.wsgi.application'
+
 
 
 # Database
@@ -139,3 +143,12 @@ REST_FRAMEWORK = {
     )
 }
 AUTH_USER_MODEL = 'user.User'
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("127.0.0.1", 6379)],
+        },
+    },
+}

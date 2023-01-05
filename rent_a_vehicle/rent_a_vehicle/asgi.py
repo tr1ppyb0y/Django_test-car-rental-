@@ -9,8 +9,16 @@ https://docs.djangoproject.com/en/4.1/howto/deployment/asgi/
 
 import os
 
+from channels.routing import ProtocolTypeRouter, URLRouter
 from django.core.asgi import get_asgi_application
+from rent_a_vehicle.token_auth_middleware import TokenAuthMiddlewareStack
+from vehicle.routing import ws_router
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'rent_a_vehicle.settings')
 
-application = get_asgi_application()
+application = ProtocolTypeRouter({
+    'http': get_asgi_application(),
+    'websocket': TokenAuthMiddlewareStack(
+        URLRouter(ws_router)
+    )
+})

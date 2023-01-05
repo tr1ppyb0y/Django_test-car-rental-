@@ -1,15 +1,18 @@
-from django.db import models
 import datetime
+
+from django.contrib.auth.models import AbstractUser, UserManager
+from django.db import models
 from django.utils import timezone
-from django.contrib.auth.models import AbstractBaseUser
+
 
 USER_TYPE = (
     ('rener', 'renter'),
     ('owner', 'owner'),
+    ('admin', 'admin')
 )
 
 
-class User(AbstractBaseUser):
+class User(AbstractUser):
     username = models.CharField(max_length=150, blank=False, null=False, unique=True)
     user_type = models.CharField(max_length=20, choices=USER_TYPE, default='renter')
     email = models.EmailField(unique=True)
@@ -17,6 +20,7 @@ class User(AbstractBaseUser):
     last_name = models.CharField(max_length=50, blank=True)
     user_created = models.DateTimeField(auto_now_add=True)
 
+    objects = UserManager()
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username', 'first_name', 'last_name']
@@ -26,11 +30,6 @@ class User(AbstractBaseUser):
 
     def full_name(self):
         return f'{self.first_name} {self.last_name}'
-    
-    def save(self, *args, **kwargs):
-        self.set_password(self.password)
-        return super().save(*args, **kwargs)
-
 
 
 class UserLoginLogs(models.Model):
@@ -41,3 +40,6 @@ class UserLoginLogs(models.Model):
     def save(self, *args, **kwargs) -> None:
         self.login_at = datetime.datetime.now(tz=timezone.utc)
         return super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.user.username

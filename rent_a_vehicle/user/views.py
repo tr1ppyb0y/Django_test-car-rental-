@@ -1,13 +1,13 @@
-from django.shortcuts import render
-from django.views.decorators.csrf import csrf_exempt
-from rest_framework.decorators import api_view
-from user import serializers as user_serializer
 from django.http import JsonResponse
-from .models import User, UserLoginLogs
-from rest_framework.authtoken.models import Token
-from rest_framework.decorators import api_view, permission_classes, authentication_classes
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework import generics, permissions
 from rest_framework.authentication import TokenAuthentication
-from rest_framework import permissions, generics
+from rest_framework.authtoken.models import Token
+from rest_framework.decorators import (api_view, authentication_classes,
+                                       permission_classes)
+from user import serializers as user_serializer
+
+from .models import User, UserLoginLogs
 
 # Create your views here.
 
@@ -49,6 +49,7 @@ def log_me_in(request):
             return JsonResponse({'message': 'Invalid ID or password'})
     return JsonResponse(serializer.errors, status=400)
 
+
 @csrf_exempt
 @authentication_classes([TokenAuthentication, ])
 @permission_classes([permissions.IsAuthenticated, ])
@@ -63,3 +64,9 @@ class ListUserLogsView(generics.ListAPIView):
     authentication_classes = (TokenAuthentication, )
     permission_classes = (permissions.IsAuthenticated, )
     serializer_class = user_serializer.LoginLogsSerializers
+
+    def get(self, request, *args, **kwargs):
+        if self.request.user.user_type == 'admin':
+            return super().get(request, *args, **kwargs)
+        else:
+            return UserLoginLogs.objects.none()
