@@ -16,5 +16,6 @@ Also, allow users to add there vehicle.
 2. retrive-update-delete-vehicle/<int:id> -- Allow owners to update/retrive/delete the details of their vehicles.
 3. vehicle-logs/ -- If the user is owner it'll show logs for his/her vehicles. 
 If the user is renter it'll show logs for the vehicles he/she rented.
+4. rent-a-vehicle/int:vehicle_id> -- User can request for renting the vehicle.
 
-** Accept/Reject is not implemented.
+Accept/Reject along with the notification is implemented using Django Channels.
